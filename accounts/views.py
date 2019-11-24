@@ -24,43 +24,43 @@ def index(request):                 #맨처음 로그인 폼 보여주는 페이
     }
     return render(request, 'accounts/form.html', context)
 
-    def signup(request):            #'GET'이면 폼보여주고
+def signup(request):            #'GET'이면 폼보여주고
                                         #'POST'면 입력받은 정보 저장하면서 로그인 진행
-        if request.method == 'POST':
-            form = CustomUserCreationForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                auth_login(request, user)
-                return redirect('movies:index')
-        else:
-            form = CustomUserCreationForm()
-        context = {
-            'form' : form
-        }
-        return render(request, 'moveis/form.html', context)
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('movies:index')
+    else:
+        form = CustomUserCreationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/form.html', context)
     
-    def logout(request):
-        auth_logout(request)
-        return rediret('accounts:home')
+def logout(request):
+    auth_logout(request)
+    return rediret('accounts:home')
     
-    def profile(request):                    # request.user의 정보 받아오기
-        User = get_user_model()
-        user = get_object_or_404(User, pk=request.user.pk)
-        context = {
-            'user' : user
-        }
-        return render(request, 'accounts/profile.html', context)
+def profile(request):                    # request.user의 정보 받아오기
+    User = get_user_model()
+    user = get_object_or_404(User, pk=request.user.pk)
+    context = {
+        'user' : user
+    }
+    return render(request, 'accounts/profile.html', context)
         
-    def update(request):                       # POST 면 변경 후 바뀐 프로필 보여주기
+def update(request):                       # POST 면 변경 후 바뀐 프로필 보여주기
                                                     # GET이면 유저 정보 변경 Form 보여주기
-        if request.method == 'POST':                   
-            form = CustomUserChangeForm(request.POST, instance=request.user)
-            if form.is_valid():
-                form.save()
-                return redirect('accounts:profile')
-        else:
-            form = CustomUserChangeForm(instance=request.user)
-        context = {
-            'form' : form
-        }
-        return render(request, 'accounts/form.html', context)
+    if request.method == 'POST':                   
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:profile')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/form.html', context)

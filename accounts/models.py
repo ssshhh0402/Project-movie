@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    prefence = models.ManyToManyField(
+    preference = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='preferences',
-        blank='True'
+        blank=True
     )
