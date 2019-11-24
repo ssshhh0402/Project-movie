@@ -4,4 +4,6 @@ from . import views
 app_name = 'accounts'
 urlpattenrs=[
     path('', views.index, name='home')
+    path('signup/', views.signup, name='signup')
+    path('profile/', views.profile, name='profile')
 ]
