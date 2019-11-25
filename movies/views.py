@@ -6,19 +6,17 @@ import datetime
 
 # Create your views here.
 
-def index(request):
+def home(request):
     signupform = CustomUserCreationForm()
     loginform = AuthenticationForm()
     context = {
         'signupform': signupform,
         'loginform': loginform
     }
-    return render(request, 'movies/index.html', context)
+    return render(request, 'movies/home.html', context)
 
-# 영화목록 
-def lists(request):             # 여기서 갑자기 든 생각인데 User model 한테 watched list  혹은 Movie model한테 watched people list 주면 어떨까 싶습니다.
-# Create your views here.
-def index(request):            
+
+def index(request):
     preferences = request.user.preference
     movie_list = [getNow()]
     for idx in preferences:             
