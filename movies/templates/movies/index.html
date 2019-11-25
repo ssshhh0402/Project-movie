@@ -67,7 +67,7 @@
       {% for movie in list.genre_movie_list %}
       <div class="swiper-slide" >
         <div class="imgBx">
-          <img src="https://image.tmdb.org/t/p/w500{{movie.poster}}">
+          <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
         </div>
         <div class="details">
           <h3>{{movie.title}}<br> <span>어쩌구</span></h3>
