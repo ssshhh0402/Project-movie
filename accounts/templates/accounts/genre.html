@@ -21,7 +21,7 @@
   <!-- 메인 div -->
   <header>
     {% if user.is_authenticated %}
-    <p style="color:white">{{ user.username }}</p>
+    <a href="{% url 'accounts:logout' %}" style="color:white">{{ user.username }}</a>
     {% endif %}
   </header>
   <div class="genre-bg">

@@ -24,7 +24,7 @@ def index(request):
     context = {
         'movie_list' : movie_list
     }
-    return render(request, 'movies/index', context)
+    return render(request, 'movies/index.html', context)
 
 def getNow():
     yesterday = datetime.date.today() - datetime.timedelta(1)

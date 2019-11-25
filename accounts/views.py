@@ -8,23 +8,17 @@ from IPython import embed
 from movies.models import Genre
 # Create your views here.
 
-def index(request):                 # 맨처음 로그인 폼 보여주는 페이지
-                                    # post => 로그인 진행, get => 로그인 폼
-    if request.user.is_authenticated:
+def login(request):                 
+    # if request.user.is_authenticated:
+    #     return redirect('/')
+    form = AuthenticationForm(request.POST, data=request.POST)
+    if form.is_valid():
+        user = form.get_user()
+        auth_login(request, user)
         return redirect('movies:index')
-    if request.method == 'POST':
-        form = AuthenticationForm(request.POST, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            auth_login(request, user)
-            return redirect('movies:index')
-        #여기다가 아이디, 비번 틀렸을 때 하는 행동 넣어야 할듯 아마도..?
     else:
-        form = AuthenticationForm()
-    context = {
-        'form' : form
-    }
-    return render(request, 'accounts/form.html', context)
+        return redirect('/')
+    
 
 def signup(request):            #'GET'이면 폼보여주고
                                         #'POST'면 입력받은 정보 저장하면서 로그인 진행
@@ -42,11 +36,12 @@ def genre(request):
     context = {
         'genres': genres
     }
+
     return render(request, 'accounts/genre.html', context)
 
 def logout(request):
     auth_logout(request)
-    return redirect('accounts:home')
+    return redirect('/')
     
 def profile(request):                    # request.user의 정보 받아오기
     User = get_user_model()
