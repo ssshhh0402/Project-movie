@@ -2,7 +2,22 @@ from django.shortcuts import render,redirect,get_object_or_404
 from . models import Movie
 import datetime
 import requests
+from .models import Movie
+from accounts.forms import CustomUserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+import datetime
+
 # Create your views here.
+
+def index(request):
+    signupform = CustomUserCreationForm()
+    loginform = AuthenticationForm()
+    context = {
+        'signupform': signupform,
+        'loginform': loginform
+    }
+    return render(request, 'movies/index.html', context)
+
 def index(request):            
     preferences = request.user.preference
     movie_list = [getNow()]
