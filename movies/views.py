@@ -23,7 +23,8 @@ def index(request):
     preferences = request.user.preference
     User = get_user_model()
     user = get_object_or_404(User, username=request.user)
-    movie_list = [getNow()]            
+    #movie_list = [getNow()]
+    movie_list = []            
     for idx in user.preference.all():   
         movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
         movie_list.append(movie[:10])
@@ -41,7 +42,7 @@ def getNow():
     url = f'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key={api_key}&targetDt={yesterday}&multiMovieYn=N&repNationCd=K'
     response = requests.get(url).json().get('boxOfficeResult').get('dailyBoxOfficeList')
     for movie in response:
-        item = Movie.objects.get(title-movie.get('movieNm'))
+        item = Movie.objects.get(title=movie.get('movieNm'))
         movie_list.append(item)
     return movie_list
 
