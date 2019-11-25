@@ -50,6 +50,10 @@ def detail(request, movie_pk):
         genre_item = Genre.objects.get(id=genre)
         genre_list.append(genre_item.name)
     movie.genres = genre_list
+    movie.credit = eval(movie.credit)
+    context = {
+        'movie': movie
+    }
     return render(request,'movies/detail.html', context)
     
 def getNow():
