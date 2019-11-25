@@ -10,6 +10,7 @@ class Movie(models.Model):
     release_date = models.DateField()
     credit = models.TextField()
     genres = models.TextField()
+    poster_url = models.TextField()
 
 class Genre(models.Model):
     name = models.TextField()
