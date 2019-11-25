@@ -4,10 +4,11 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from IPython import embed
 # Create your views here.
 
-def index(request):                 #맨처음 로그인 폼 보여주는 페이지
-                                    #post => 로그인 진행, get => 로그인 폼
+def index(request):                 # 맨처음 로그인 폼 보여주는 페이지
+                                    # post => 로그인 진행, get => 로그인 폼
     if request.user.is_authenticated:
         return redirect('movies:index')
     if request.method == 'POST':
@@ -24,24 +25,25 @@ def index(request):                 #맨처음 로그인 폼 보여주는 페이
     }
     return render(request, 'accounts/form.html', context)
 
+
+
 def signup(request):            #'GET'이면 폼보여주고
                                         #'POST'면 입력받은 정보 저장하면서 로그인 진행
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect('movies:index')
+    form = CustomUserCreationForm(request.POST)
+    if form.is_valid():
+        user = form.save()
+        auth_login(request, user)
+        return redirect('accounts:genre')
     else:
-        form = CustomUserCreationForm()
-    context = {
-        'form' : form
-    }
-    return render(request, 'accounts/form.html', context)
+        # 비밀번호가 잘못됐습니다 경고문 띄우기
+        return render(request, 'movies/index.html')
+
+def genre(request):
+    return render(request, 'movies/genre.html')
     
 def logout(request):
     auth_logout(request)
-    return rediret('accounts:home')
+    return redirect('accounts:home')
     
 def profile(request):                    # request.user의 정보 받아오기
     User = get_user_model()

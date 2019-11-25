@@ -1,0 +1,46 @@
+body {
+  /* background-color: black; */
+}
+.genre-bg {
+  background-image: url(../images/poster0.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.genre_box {
+  height: 200px;
+  /* border: solid .5px; */
+  padding: 20px;
+}
+input[type="checkbox"] {
+   display: none;
+}
+label {
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  font-size: 1.5rem;
+  background-color: black;
+  opacity: .6;
+  text-align: center;
+  color: white
+}
+label:hover {
+  opacity: .8;
+}
+header {
+  height: 80px;
+  background-color: black;
+
+}
+footer {
+  height : 80px;
+  background-color: black;
+}
+.genre-submit {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #00BFF9;
+  border: none;
+  color: white;
+}
