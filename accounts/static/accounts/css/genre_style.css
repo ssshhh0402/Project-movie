@@ -12,9 +12,9 @@ body {
   padding: 20px;
 }
 
-input[type="checkbox"] {
+/* input[type="checkbox"] {
   display: none;
-}    
+}     */
 label {
   width: 150px;
   height: 150px;

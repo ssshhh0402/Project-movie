@@ -57,22 +57,24 @@
 </head>
 <body>
   <h1> 영화 목록입니다.</h1>
+  {% for list in movie_list %}
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <!-- 반복 -->
+      {% for movie in list%}
       <div class="swiper-slide" >
         <div class="imgBx">
-          <img src="{% static 'images/img01.jpg' %}">
+          <img src="https://image.tmdb.org/t/p/w500{{movie.poster}}">
         </div>
         <div class="details">
-          <h3>img01 <br> <span>어쩌구</span></h3>
+          <h3>{{movie.title}}<br> <span>어쩌구</span></h3>
         </div>
       </div>
-
+      {% endfor %}
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
   </div>
+  {% endfor%}
 
   <script src="https://unpkg.com/swiper/js/swiper.js"></script>
   <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
