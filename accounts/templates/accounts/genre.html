@@ -34,6 +34,7 @@
       <div class="row">
         {% for genre in genres %}
           <div class="genre_box col-2">
+            <!-- <label for="{{genre.name}}" onClick="count_ck(this)" onmousemove="upDate(this)" onmouseout = "unDo()">{{genre.name}}</label> -->
             <label for="{{genre.name}}" onClick="count_ck(this)">{{genre.name}}</label>
           </div>
         {% endfor %}
@@ -46,6 +47,19 @@
 
 
   <script>
+  document.querySelectorAll('label').addEventListener('mouseover', function(event) {
+    console.log(event)
+  })
+  function upDate(picture) {
+    const src = picture.getAttribute("for")
+    // console.log("url('../images/" + src + ".jpg');")
+    console.log(document.querySelector('.genre-bg'))
+    document.querySelector('.genre-bg').style.backgroundImage = "url('../images/" + src + ".jpg');"
+  }    
+  function unDo(X){
+    document.querySelector('.genre-bg').style.backgroundImage = "url('')"; 
+  }
+
   function count_ck(obj){
   var chkbox = document.getElementsByName("genre");
   var chkCnt = 0;
