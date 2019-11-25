@@ -15,7 +15,6 @@ def home(request):
     }
     return render(request, 'movies/home.html', context)
 
-
 def index(request):
     preferences = request.user.preference
     movie_list = [getNow()]

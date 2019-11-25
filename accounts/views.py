@@ -5,6 +5,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from IPython import embed
+from movies.models import Genre
 # Create your views here.
 
 def index(request):                 # 맨처음 로그인 폼 보여주는 페이지
@@ -25,8 +26,6 @@ def index(request):                 # 맨처음 로그인 폼 보여주는 페�
     }
     return render(request, 'accounts/form.html', context)
 
-
-
 def signup(request):            #'GET'이면 폼보여주고
                                         #'POST'면 입력받은 정보 저장하면서 로그인 진행
     form = CustomUserCreationForm(request.POST)
@@ -36,12 +35,15 @@ def signup(request):            #'GET'이면 폼보여주고
         return redirect('accounts:genre')
     else:
         # 비밀번호가 잘못됐습니다 경고문 띄우기
-        return render(request, 'movies/index.html')
+        return render(request, 'movies/home.html')
 
 def genre(request):
-    ge
-    return render(request, 'movies/genre.html')
-    
+    genres = Genre.objects.all()
+    context = {
+        'genres': genres
+    }
+    return render(request, 'accounts/genre.html', context)
+
 def logout(request):
     auth_logout(request)
     return redirect('accounts:home')
