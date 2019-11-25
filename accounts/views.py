@@ -39,6 +39,7 @@ def signup(request):            #'GET'이면 폼보여주고
         return render(request, 'movies/index.html')
 
 def genre(request):
+    ge
     return render(request, 'movies/genre.html')
     
 def logout(request):
