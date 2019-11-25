@@ -9,22 +9,26 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'accounts/css/genre_style.css' %}">
   <title>Genre</title>
+  <style>
+
+  </style>
 </head>
 <body>
   <!-- display:none 시킬 form들-->
-  <form action="{% url 'accounts:genre' %}" method="POST">
-    {% csrf_token %}
-    {% for genre in Genres %}
-    <input type="checkbox" name="genre" value='genre.id' id="{{genre.name}}">
-    {% endfor %}
-    <input class="genre-submit" type="submit" value="저장">
-  </form>
+
   <!-- 메인 div -->
   <header>
     {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}" style="color:white">{{ user.username }}</a>
     {% endif %}
   </header>
+  <form action="{% url 'accounts:genre' %}" method="POST">
+    {% csrf_token %}
+    {% for genre in genres %}
+    <input type="checkbox" name="genre" value='{{genre.id}}' id="{{genre.name}}">
+    {% endfor %}
+    <input class="genre-submit" type="submit" value="저장">
+  </form>  
   <div class="genre-bg">
     <div class="container">
       <div class="row">
