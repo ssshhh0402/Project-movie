@@ -3,7 +3,6 @@ from django.conf import settings
 # Create your models here.
 
 class Movie(models.Model):
-    movieId = models.IntegerField()
     title = models.TextField()
     original_title = models.TextField()
     popularity = models.FloatField()
