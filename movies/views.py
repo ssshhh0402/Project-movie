@@ -20,7 +20,6 @@ def home(request):
     return render(request, 'movies/home.html', context)
 
 def index(request):
-    preferences = request.user.preference
     User = get_user_model()
     user = get_object_or_404(User, username=request.user)
     #movie_list = [getNow()]
@@ -34,6 +33,13 @@ def index(request):
     }
     return render(request, 'movies/index.html', context)
 
+def detail(request, movie_pk):
+    movie = get_object_or_404(Movie, id=movie_pk)
+    context = {
+        'movie' : movie
+    }
+    return render(request,'movies/detail.html', context)
+    
 def getNow():
     yesterday = datetime.date.today() - datetime.timedelta(1)
     yesterday = yesterday.strftime('%Y%m%d')
