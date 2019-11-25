@@ -39,7 +39,8 @@ def getNow():
     url = f'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key={api_key}&targetDt={yesterday}&multiMovieYn=N&repNationCd=K'
     response = requests.get(url).json().get('boxOfficeResult').get('dailyBoxOfficeList')
     for movie in response:
-        movie_list.append(movie.get('movieNm'))
+        item = Movie.objects.get(title=movie.get('movieNm'))
+        movie_list.append(item)
     return movie_list
 
 
