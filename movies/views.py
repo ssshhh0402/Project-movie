@@ -1,12 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from . models import Movie
-import datetime
-import requests
-from .models import Movie
+from .models import Movie, Genre
 from accounts.forms import CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 import datetime
-
+import requests
 # Create your views here.
 
 def home(request):
