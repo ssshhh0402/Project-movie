@@ -8,14 +8,15 @@ from IPython import embed
 from movies.models import Genre
 # Create your views here.
 
-def login(request):                 
-    # if request.user.is_authenticated:
-    #     return redirect('/')
+def login(request):
     form = AuthenticationForm(request.POST, data=request.POST)
     if form.is_valid():
         user = form.get_user()
         auth_login(request, user)
-        return redirect('movies:index')
+        if not user.preference.all():
+            return redirect('accounts:genre')
+        else:
+            return redirect('movies:index')
     else:
         return redirect('/')
     
@@ -36,8 +37,11 @@ def genre(request):
     context = {
         'genres': genres
     }
-
-    return render(request, 'accounts/genre.html', context)
+    if request.method == 'POST':
+        user = request.user
+        
+    else:
+        return render(request, 'accounts/genre.html', context)
 
 def logout(request):
     auth_logout(request)

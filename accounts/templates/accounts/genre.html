@@ -12,7 +12,8 @@
 </head>
 <body>
   <!-- display:none 시킬 form들-->
-  <form action="">
+  <form action="{% url 'accounts:genre' %}" method="POST">
+    {% csrf_token %}
     {% for genre in Genres %}
     <input type="checkbox" name="genre" value='genre.id' id="{{genre.name}}">
     {% endfor %}
