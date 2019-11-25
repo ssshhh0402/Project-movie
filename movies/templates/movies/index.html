@@ -23,6 +23,9 @@
       padding-top: 50px;
       padding-bottom: 50px;
     }
+    .swiper-container > h1 {
+      color: white;
+    }
     .swiper-slide {
       background-position: center;
       background-size: cover; 
@@ -59,8 +62,9 @@
   <h1> 영화 목록입니다.</h1>
   {% for list in movie_list %}
   <div class="swiper-container">
+    <h1>{{list.genre}} 기반 추천영화</h1>
     <div class="swiper-wrapper">
-      {% for movie in list%}
+      {% for movie in list.genre_movie_list %}
       <div class="swiper-slide" >
         <div class="imgBx">
           <img src="https://image.tmdb.org/t/p/w500{{movie.poster}}">

@@ -23,12 +23,22 @@ def index(request):
     User = get_user_model()
     user = get_object_or_404(User, username=request.user)
     #movie_list = [getNow()]
-    movie_list = []            
+    movie_list = []
+    preference_list = user.preference.all()            
+
     for idx in user.preference.all():   
+        genre_movie = {}
+        genre_movie['genre'] = Genre.objects.get(id=idx.id).name
+        
         movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
-        movie_list.append(movie[:10])
-    
+        genre_movie['genre_movie_list'] = movie[:10]
+        movie_list.append(genre_movie)
+
+    # for idx in range(3):
+    #     movie = Movie.objects.filter(genres__contains=preference_list[idx].id).order_by('-popularity')
+    #     movie_list.append(movie[:10])
     context = {
+        # 'genre_list' : preference_list,
         'movie_list' : movie_list
     }
     return render(request, 'movies/index.html', context)
