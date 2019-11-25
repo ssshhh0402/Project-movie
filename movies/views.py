@@ -26,7 +26,7 @@ def index(request):
     print(preferences)
     movie_list = [getNow()]            
     for idx in user.preference:             
-        movie = Movie.objects.filter(genre = idx).order_by('-popularity')
+        movie = Movie.objects.filter(genres__include= idx.id).order_by('-popularity')
         movie_list.append(movie[:10])
     context = {
         'movie_list' : movie_list
