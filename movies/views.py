@@ -29,7 +29,6 @@ def index(request):
     for idx in user.preference.all():   
         genre_movie = {}
         genre_movie['genre'] = Genre.objects.get(id=idx.id).name
-        
         movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
         genre_movie['genre_movie_list'] = movie[:10]
         movie_list.append(genre_movie)
@@ -45,9 +44,12 @@ def index(request):
 
 def detail(request, movie_pk):
     movie = get_object_or_404(Movie, id=movie_pk)
-    context = {
-        'movie' : movie
-    }
+    genre_list = []
+    movie_genre_list = eval(movie.genres)
+    for genre in movie_genre_list:
+        genre_item = Genre.objects.get(id=genre)
+        genre_list.append(genre_item.name)
+    movie.genres = genre_list
     return render(request,'movies/detail.html', context)
     
 def getNow():
