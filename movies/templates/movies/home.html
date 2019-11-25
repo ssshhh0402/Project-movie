@@ -55,7 +55,7 @@
           <h2>로그인</h2>
           <p>이미 회원이면 로그인하고 영화나 보시죠.</p>
           <form action="{% url 'accounts:login' %}" method="POST">
-            {% csrf_token%}
+            {% csrf_token %}
             <div class="form-group">
               <label for="username">아이디</label>
               <input type="text" class="form-control" id="username" placeholder="아이디" name="username">

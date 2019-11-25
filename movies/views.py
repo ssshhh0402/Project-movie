@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Movie, Genre
 from accounts.forms import CustomUserCreationForm
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
+from IPython import embed
 import datetime
 import requests
 # Create your views here.
@@ -17,8 +19,13 @@ def home(request):
 
 def index(request):
     preferences = request.user.preference
-    movie_list = [getNow()]
-    for idx in preferences:             
+    User = get_user_model()
+    user = get_object_or_404(User, username=request.user)
+    print(user)
+    embed()
+    print(preferences)
+    movie_list = [getNow()]            
+    for idx in user.preference:             
         movie = Movie.objects.filter(genre = idx).order_by('-popularity')
         movie_list.append(movie[:10])
     context = {
