@@ -13,6 +13,9 @@ class Movie(models.Model):
     genres = models.TextField()
 
 class Genre(models.Model):
-    genre_num = models.IntegerField()
-    genre_name = models.TextField()
+    name = models.TextField()
     
+class Actor(models.Model):
+    name = models.CharField(max_length=30)
+    gender = models.IntegerField()
+    images = models.URLField()
