@@ -55,12 +55,12 @@ def detail(request, movie_pk):
         video_list = (eval(movie.videos)[0])
     movie.videos = video_list
     movie.credit = eval(movie.credit)
-    #re_movie = get_re(movie_pk)
+    re_movie = get_re(movie_pk)
     comments = movie.comment_set.all()
     comment_form = CommentForm()
     context = {
         'movie': movie,
-        #'re_movie' : re_movie,
+        're_movie' : re_movie,
         'comments' : comments,
         'comment_form' : comment_form
     }
@@ -108,42 +108,41 @@ def getNow():
             movie_list.append(movie)
     return movie_list
 
-# def get_re(a):
-#     api_key = '69855813cd52f7cdbc7e336c8afaac95'
-#     url = f'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
-#     response= requests.get(url).json().get('results')
-#     movie_list = []
-#     genre_list = []
-#     video_list = []
-#     recommendation_list = []
-#     if not response:                                # 추천 영화 없으면
-#         return recommendation_list
-#     for i in range(10):
-#         movie_list.append(response[i].get('id'))
-#     for movie in movie_list:
-#         try:
-#             item = Movie.objects.get(movieid=movie)
-#             recommendation_list.append(item)
-#         except:
-#             url = f'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}&language=ko-KR&append_to_response=videos%2Ccredits'
-#             #response = requests.get(url).json().get('result')
-#             response = requests.get(url).json()
-#             for genre in response.get('genres'):
-#                 genre_list.append(genre.get('id'))
-#             videos = response.get('videos').get('results')
-#             if videos:
-#                 for video in videos:
-#                     video_list.append(video.get('key'))
-#             else:
-#                 url_en = f'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}&language=en-US&append_to_response=videos%2Ccredits'
-#                 response_en = requests.get(url_en).json().get('videos').get('results')
-#                 if response_en:
-#                     for video in response_en:
-#                         video_list.append(video.get('key'))
-            
-#             movie_item = Movie.objects.create(movieid=movie, title=response.get('title'), overview=response.get('overview'), genres=genre_list, poster=response.get('poster_path'), original_title=response.get('original_title'), popularity=response.get('popularity'), runtime=response.get('runtime'), release_date = response.get('release_date'),videos=video_list,credit=response.get('credits').get('cast'))
-#             recommendation_list.append(movie_item)
-#     return recommendation_list
+def get_re(a):
+    api_key = '69855813cd52f7cdbc7e336c8afaac95'
+    url = f'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
+    response= requests.get(url).json().get('results')
+    movie_list = []
+    genre_list = []
+    video_list = []
+    recommendation_list = []
+    if not response:                                # 추천 영화 없으면
+        return recommendation_list
+    for i in range(10):
+        movie_list.append(response[i].get('id'))
+    for movie in movie_list:
+        try:
+            item = Movie.objects.get(movieid=movie)
+            recommendation_list.append(item)
+        except:
+            url = f'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}&language=ko-KR&append_to_response=videos%2Ccredits'
+            #response = requests.get(url).json().get('result')
+            response = requests.get(url).json()
+            for genre in response.get('genres'):
+                genre_list.append(genre.get('id'))
+            videos = response.get('videos').get('results')
+            if videos:
+                for video in videos:
+                    video_list.append(video.get('key'))
+            else:
+                url_en = f'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}&language=en-US&append_to_response=videos%2Ccredits'
+                response_en = requests.get(url_en).json().get('videos').get('results')
+                if response_en:
+                    for video in response_en:
+                        video_list.append(video.get('key'))
+            movie_item = Movie.objects.create(movieid=movie, title=response.get('title'), overview=response.get('overview'), genres=genre_list, poster=response.get('poster_path'), original_title=response.get('original_title'), popularity=response.get('popularity'), runtime=response.get('runtime'), release_date = response.get('release_date'),videos=video_list,credit=response.get('credits').get('cast'))
+            recommendation_list.append(movie_item)
+    return recommendation_list
 
 ########################################댓글#########################
 @require_POST
@@ -156,7 +155,8 @@ def comment_create(request, movie_pk):
             comment.movie = movie
             comment.user = request.user
             comment.save()
-        return redirect('movies:detail', movie_pk)
+            return redirect('movies:detail', movie_pk)
+        # 타당하지 않을 경우 Alert 창 띄우면 될것같은데...
     else:
         return HttpResponse('Unauthorized', status=401)
 
