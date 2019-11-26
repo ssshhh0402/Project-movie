@@ -3,16 +3,16 @@ body {
 }
 .genre-bg {
   /* background-color: black; */
-  background-image: url('../images/모험.jpg');
+  background-color: #131313;
   background-size: cover;
   background-repeat: no-repeat;
-}
-.genre_box {
-  height: 200px;
-  /* border: solid .5px; */
-  padding: 20px;
+  /* transition: all 0.5s; */
 }
 
+.genre_box {
+  height: 200px;
+  padding: 20px;
+}
 /* input[type="checkbox"] {
   display: none;
 }     */
@@ -29,10 +29,13 @@ label {
 label:hover {
   opacity: .8;
 }
+.select-label {
+  opacity: 1 !important;
+  color: yellow;
+}
 header {
   height: 80px;
   background-color: black;
-
 }
 footer {
   height : 80px;
