@@ -43,6 +43,7 @@ def index(request):
 def detail(request, movie_pk):
     movie = get_object_or_404(Movie, id=movie_pk)
     genre_list = []
+    now_list = getNow()
     movie_genre_list = eval(movie.genres)
     for genre in movie_genre_list:
         genre_item = Genre.objects.get(id=genre)
@@ -50,7 +51,8 @@ def detail(request, movie_pk):
     movie.genres = genre_list
     movie.credit = eval(movie.credit)
     context = {
-        'movie': movie
+        'movie': movie,
+        'now' : now_list
     }
     return render(request,'movies/detail.html', context)
     
