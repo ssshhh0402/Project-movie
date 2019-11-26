@@ -44,7 +44,6 @@ def index(request):
 
 def detail(request, movie_pk):
     movie = get_object_or_404(Movie, movieid=movie_pk)
-    embed()
     genre_list = []
     movie_genre_list = eval(movie.genres)
     for genre in movie_genre_list:
