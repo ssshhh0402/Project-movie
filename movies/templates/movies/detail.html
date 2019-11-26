@@ -26,6 +26,9 @@
       border-color: white;
       background-color: white;
     }
+    .comment {
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -45,6 +48,13 @@
           <p>인기도: {{movie.popularity}}</p>
           <p>상영시간: {{movie.runtime}}분</p>
           <p>개봉일: {{movie.release_date}}</p>
+          {% if user in movie.like_users %}
+          <button type="button" class="btn btn-success">좋아요 취소</button>
+          {% else %}
+          <button type="button" class="btn btn-secondary">좋아요</button>
+          {% endif %}
+
+
       </div>
     </div> 
     <div class='mt-3'>
@@ -83,7 +93,23 @@
         </div>
       {% endfor %}
       </div>
-    </div><hr>
+    </div>
+    <div class="mt-3">
+    <hr>
+    <h1>평점</h1>
+    <form action="{% url 'movies:c_comment' movie.pk %}" method="POST">
+      {% csrf_token%}
+      <div class="form-group">
+        <label class="comment" for="content">평점 남기기</label>
+        <input type="text" class="form-control" id="content" placeholder="댓글 작성" name="content">
+      </div>
+      <input class="d-block btn btn-dark ml-auto mt-2 " type="submit" value="등록">
+    </form>
+    {% for comment in comments %}
+    <p><span>{{comment.user}} |</span> {{comment.content}}</p>
+    {% endfor %}
+    </div>
+
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
