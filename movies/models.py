@@ -28,6 +28,8 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE
                                 )
+    score = models.IntegerField()
+
 
 class Genre(models.Model):
     name = models.TextField()
