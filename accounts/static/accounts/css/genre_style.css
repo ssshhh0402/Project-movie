@@ -8,7 +8,6 @@ body {
   background-repeat: no-repeat;
   /* transition: all 0.5s; */
 }
-
 .genre_box {
   height: 200px;
   padding: 20px;
@@ -47,7 +46,4 @@ footer {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: #00BFF9;
-  border: none;
-  color: white;
 }

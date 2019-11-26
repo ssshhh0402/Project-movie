@@ -19,12 +19,12 @@
     {% for genre in genres %}
     <input type="checkbox" name="genre" value='{{genre.id}}' id="{{genre.name}}">
     {% endfor %}
-    <input class="genre-submit" type="submit" value="저장">
+    <button class="btn btn-dark genre-submit disabled" type="submit">저장</button>
   </form>  
   <!-- 메인 div -->
   <header>
     {% if user.is_authenticated %}
-    <a href="{% url 'accounts:logout' %}" style="color:white">{{ user.username }}</a>
+    <a href="{% url 'accounts:logout' %}" style="color:white" >{{ user.username }}</a>
     {% endif %}
   </header>
   <div class="genre-bg">
@@ -38,11 +38,8 @@
       </div>
     </div>
   </div>
-
   <footer>
   </footer>
-
-
   <script>
   document.querySelectorAll('label').forEach(label => {
     label.addEventListener('mouseover', function(event) {
@@ -52,7 +49,7 @@
     label.addEventListener('click', function(event) {
       this.classList.toggle('select-label')
     })
-    label.addEventListener('click', function(event) {      
+    label.addEventListener('click', function(event) {
       var chkbox = document.getElementsByName("genre");
       var chkCnt = 1;
       for(var i = 0; i<chkbox.length; i++){
@@ -65,8 +62,6 @@
           const genreCheckbox = document.getElementById(genre).checked = 'false'
           this.classList.remove('select-label')
           alert("장르는 3개까지 선택 가능합니다.");
-          
-          
         }
       })
   })
