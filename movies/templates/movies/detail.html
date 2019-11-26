@@ -99,14 +99,20 @@
     <h1>평점</h1>
     <form action="{% url 'movies:c_comment' movie.pk %}" method="POST">
       {% csrf_token%}
-      <div class="form-group">
-        <label class="comment" for="content">평점 남기기</label>
-        <input type="text" class="form-control" id="content" placeholder="댓글 작성" name="content">
+      <div class="row">
+        <div class="form-group col-2">
+          <label class="comment" class="score" for="content">평점 </label>
+          <input type="number" class="form-control" id="score" name="score">
+        </div>
+        <div class="form-group col-10">
+          <label class="comment" for="content">댓글</label>
+          <input type="text" class="form-control" id="content" placeholder="댓글 작성" name="content">
+        </div>
       </div>
       <input class="d-block btn btn-dark ml-auto mt-2 " type="submit" value="등록">
     </form>
     {% for comment in comments %}
-    <p><span>{{comment.user}} |</span> {{comment.content}}</p>
+    <p><span>{{comment.user}} | {{comment.score}}점 |</span> {{comment.content}}</p>
     {% endfor %}
     </div>
 
