@@ -49,8 +49,10 @@ def detail(request, movie_pk):
         video_list = (eval(movie.videos)[0])
     movie.videos = video_list
     movie.credit = eval(movie.credit)
+    re_movie = get_re(movie_pk)
     context = {
-        'movie': movie,     
+        'movie': movie,
+        're_movie' : re_movie
     }
  
     return render(request,'movies/detail.html', context)
@@ -95,6 +97,39 @@ def getNow():
                         video_list.append(movie.get('key'))
             movie = Movie.objects.create(movieid=response_detail.get('id'),title=response_detail.get('title'), overview=response_detail.get('overview'), genres=genre_list, poster=response_detail.get('poster_path'), original_title=response_detail.get('original_title'), popularity= response_detail.get('popularity'), runtime= response_detail.get('runtime'), release_date=response_detail.get('release_date'), videos = video_list, credit = response_detail.get('credits').get('cast'))
             movie_list.append(movie)
-    
-
     return movie_list
+
+def get_re(a):
+    api_key = '69855813cd52f7cdbc7e336c8afaac95'
+    url = 'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
+    response = requests.get(url).json().order_by('popularity')
+    movie_list = []
+    genre_list = []
+    video_list = []
+    recommendation_list = []
+    for i in range(10):
+        movie_list.append(response[i].get('id'))
+    
+    for movie in movie_list:
+        try:
+            item = Movie.objects.get(movieid=movie)
+            recommendation_list.append(item)
+        except:
+            url = 'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}}95&language=ko-KR&append_to_response=videos%2Ccredits'
+            response = requests.get(url).json().get('result')
+            for genre in response.get('genres'):
+                genre_list.append(genre.get('id'))
+            videos = response.get('videos').get('results')
+            if videos:
+                for video in videos:
+                    video_list.append(video.get('key'))
+            else:
+                url_en = f'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}&language=en-US&append_to_response=videos%2Ccredits'
+                response_en = requests.get(url_en).json().get('videos').get('results')
+                if response_en:
+                    for video in response_en:
+                        video_list.append(video.get('key'))
+            
+            movie_item = Movie.objects.create(movieid=movie, title=response.get('title'), overview=response.get('overview'), genres=genre_list, poster=response.get('poster_path'), original_titl=response.get('original_title'), popularity=response.get('popularity'), runtime=response.get('runtime'), release_date = response.get('release_date'),videos=video_list,credit=response.get('credits').get('cast'))
+            recommendation_list.append(movie_item)
+    return recommendation_list
