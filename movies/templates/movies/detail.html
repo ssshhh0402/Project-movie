@@ -53,6 +53,17 @@
       <div style="text-align: center;">
         <iframe width="1000" height="600" src="https://www.youtube.com/embed/{{movie.videos}}" frameborder="0" allowfullscreen></iframe>
       </div>    
+    </div> <hr>
+    <div class="mt-3">
+      <h1>추천영화</h1>
+      <div class="row">
+        {% for movie in re_movie %}
+          <div class="col-2">
+            <img  width="100%" src="https://image.tmdb.org/t/p/w200{{movie.poster}}">
+            <p>{{movie.title}}</p>
+          </div>
+        {% endfor %}
+      </div>
     </div>
     <div class="mt-5">
       <hr>
