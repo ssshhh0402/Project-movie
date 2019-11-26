@@ -10,18 +10,10 @@
   <link rel="stylesheet" href="{% static 'accounts/css/genre_style.css' %}">
   <title>Genre</title>
   <style>
-
   </style>
 </head>
 <body>
   <!-- display:none 시킬 form들-->
-
-  <!-- 메인 div -->
-  <header>
-    {% if user.is_authenticated %}
-    <a href="{% url 'accounts:logout' %}" style="color:white">{{ user.username }}</a>
-    {% endif %}
-  </header>
   <form action="{% url 'accounts:genre' %}" method="POST">
     {% csrf_token %}
     {% for genre in genres %}
@@ -29,12 +21,18 @@
     {% endfor %}
     <input class="genre-submit" type="submit" value="저장">
   </form>  
+  <!-- 메인 div -->
+  <header>
+    {% if user.is_authenticated %}
+    <a href="{% url 'accounts:logout' %}" style="color:white">{{ user.username }}</a>
+    {% endif %}
+  </header>
   <div class="genre-bg">
     <div class="container">
       <div class="row">
         {% for genre in genres %}
           <div class="genre_box col-2">
-            <label for="{{genre.name}}" onClick="count_ck(this)">{{genre.name}}</label>
+            <label for="{{genre.name}}">{{genre.name}}</label>
           </div>
         {% endfor %}
       </div>
@@ -46,20 +44,34 @@
 
 
   <script>
-  function count_ck(obj){
-  var chkbox = document.getElementsByName("genre");
-  var chkCnt = 0;
-  for(var i=0;i<chkbox.length; i++){
-    if(chkbox[i].checked){
-        chkCnt++;
-      }
-    }
-    if(chkCnt>2){
-      alert("장르는 3개까지 선택 가능합니다.");
-      obj.checked = false;
-      return false;
-    }
-  }
+  document.querySelectorAll('label').forEach(label => {
+    label.addEventListener('mouseover', function(event) {
+      let genreName = event.target.getAttribute('for')
+      document.querySelector('.genre-bg').style.backgroundImage  = "url('/static/accounts/images/" + genreName + ".jpg')"
+    })
+    // label.addEventListener('mouseout', function(event) {
+    //   document.querySelector('.genre-bg').style.backgroundImage  = "url('')"
+    // })
+    label.addEventListener('click', function(event) {
+      this.classList.toggle('select-label')
+    })
+    label.addEventListener('click', function(event) {
+      var chkbox = document.getElementsByName("genre");
+      var chkCnt = 1;
+      for(var i = 0; i<chkbox.length; i++){
+        if(chkbox[i].checked){
+            chkCnt++;
+          }
+        }
+        console.log(chkCnt)
+        if(chkCnt>3){
+          alert("장르는 3개까지 선택 가능합니다.");
+          this.checked = false;
+          return false;
+        }
+      })
+  })
+
   </script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

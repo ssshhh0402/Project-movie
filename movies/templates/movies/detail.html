@@ -5,17 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    body {
+      background: #131313;    
+    }
+    p, span {
+      color: white;
+    }
+    .profile {
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
+  <img src="https://image.tmdb.org/t/p/w200{{movie.poster}}">
   <p>{{movie.title}}</p>
   <p>{{movie.original_title}}</p>
   <p>{{movie.popularity}}</p>
   <p>{{movie.runtime}}</p>
   <p>{{movie.release_date}}</p>
-  <p>{{movie.credit}}</p>
   <p>{{movie.genres}}</p>
-  <p>{{movie.poster}}</p>
-  <p>{{movie.videos}}</p>
-  
+  {% for item in movie.credit %}
+    <div class="profile">
+      {% if item.profile_path %}
+      <img src="https://image.tmdb.org/t/p/w200{{item.profile_path}}">
+      {% else %}
+      <span>[사진없음]</span>
+      {% endif%}
+      <p>name {{item.name}}</p>
+    </div>
+  {% endfor %}
+  <p>{{movie.videos}}</p> 
 </body>
 </html>

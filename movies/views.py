@@ -50,7 +50,7 @@ def detail(request, movie_pk):
     movie.genres = genre_list
     movie.credit = eval(movie.credit)
     context = {
-        'movie' : movie
+        'movie': movie
     }
     return render(request,'movies/detail.html', context)
     
