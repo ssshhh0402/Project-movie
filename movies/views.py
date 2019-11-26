@@ -90,5 +90,3 @@ def getNow():
     
 
     return movie_list
-
-
