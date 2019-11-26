@@ -25,7 +25,7 @@ def index(request):
     embed()
     print(preferences)
     movie_list = [getNow()]            
-    for idx in user.preference:             
+    for idx in user.preference.all():             
         movie = Movie.objects.filter(genres__include= idx.id).order_by('-popularity')
         movie_list.append(movie[:10])
     context = {
