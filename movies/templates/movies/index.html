@@ -11,8 +11,7 @@
   <title>MovieList</title>
   <style>
     body {
-      /* background: #131313; */
-      background: white;
+      background: #131313;
       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
       font-size: 14px;
       color:#000;
@@ -21,8 +20,8 @@
     }
     .swiper-container {
       width: 100%;
-      padding-top: 50px;
-      padding-bottom: 50px;
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
     .swiper-container > h1 {
       color: white;
@@ -30,13 +29,13 @@
     .swiper-slide {
       background-position: center;
       background-size: cover; 
-      width: 300px;
-      height: 400px;
+      width: 250px;
+      height: 450px;
       background: #fff;
     }
     .swiper-slide .imgBx {
       width: 100%;
-      height: 300px;
+      height: 350px;
       overflow: hidden;
     }
     .swiper-slide .imgBx img {
@@ -44,7 +43,7 @@
     }
     .swiper-slide .details {
       box-sizing: border-box;
-      padding:20px;
+      padding:30px;
     }
     .swiper-slide .details h3 {
       margin: 0;
@@ -60,7 +59,24 @@
   </style>
 </head>
 <body>
-  <h1> 영화 목록입니다.</h1>
+
+  <div class="swiper-container">
+    <h1>현재 상영작</h1>
+    <div class="swiper-wrapper">
+        {% for movie in now %}
+      <div class="swiper-slide" >
+        <div class="imgBx">
+          <a href="{% url 'movies:detail' movie.movieid %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
+        </div>
+        <div class="details">
+          <h3>{{movie.title}}<br> <span>어쩌구</span></h3>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+  </div>
   {% for list in movie_list %}
   <div class="swiper-container">
     <h1>{{list.genre}} 기반 추천영화</h1>

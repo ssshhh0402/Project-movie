@@ -30,25 +30,24 @@ def index(request):
         movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
         genre_movie['genre_movie_list'] = movie[:10]
         movie_list.append(genre_movie)
-
-    # for idx in range(3):
-    #     movie = Movie.objects.filter(genres__contains=preference_list[idx].id).order_by('-popularity')
-    #     movie_list.append(movie[:10])
     context = {
-        # 'genre_list' : preference_list,
         'movie_list' : movie_list,
         'now' : now_list
     }
     return render(request, 'movies/index.html', context)
 
 def detail(request, movie_pk):
-    movie = get_object_or_404(Movie, id=movie_pk)
+    movie = get_object_or_404(Movie, movieid=movie_pk)
     genre_list = []
     movie_genre_list = eval(movie.genres)
     for genre in movie_genre_list:
         genre_item = Genre.objects.get(id=genre)
         genre_list.append(genre_item.name)
     movie.genres = genre_list
+    video_list = ''
+    if eval(movie.videos):
+        video_list = (eval(movie.videos)[0])
+    movie.videos = video_list
     movie.credit = eval(movie.credit)
     context = {
         'movie': movie,     
@@ -61,10 +60,11 @@ def getNow():
     yesterday = yesterday.strftime('%Y%m%d')
     movie_list = []
     api_key = '407e887e6e33a30edd477d217f18d883'
-    url = f'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key={api_key}&targetDt={yesterday}&multiMovieYn=N&repNationCd=K'
+    url = f'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key={api_key}&targetDt={yesterday}&multiMovieYn=N'
     a = requests.get(url).json()
     response = requests.get(url).json().get('boxOfficeResult').get('dailyBoxOfficeList')
     api_key = '69855813cd52f7cdbc7e336c8afaac95'
+    print(response)
     for movie in response:
         try:
             item = Movie.objects.get(title=movie.get('movieNm'))
