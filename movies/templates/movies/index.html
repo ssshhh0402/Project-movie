@@ -11,7 +11,8 @@
   <title>MovieList</title>
   <style>
     body {
-      background: #131313;
+      /* background: #131313; */
+      background: white;
       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
       font-size: 14px;
       color:#000;
@@ -67,7 +68,7 @@
       {% for movie in list.genre_movie_list %}
       <div class="swiper-slide" >
         <div class="imgBx">
-          <a href="{% url 'movies:detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
+          <a href="{% url 'movies:detail' movie.movieid %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
         </div>
         <div class="details">
           <h3>{{movie.title}}<br> <span>어쩌구</span></h3>
@@ -79,7 +80,7 @@
     <div class="swiper-pagination"></div>
   </div>
   {% endfor%}
-
+ 
   <script src="https://unpkg.com/swiper/js/swiper.js"></script>
   <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
   <script>

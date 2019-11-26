@@ -22,7 +22,7 @@ def home(request):
 def index(request):
     User = get_user_model()
     user = get_object_or_404(User, username=request.user)
-    #movie_list = [getNow()]
+    now_list = getNow()
     movie_list = []
     for idx in user.preference.all():   
         genre_movie = {}
@@ -36,14 +36,14 @@ def index(request):
     #     movie_list.append(movie[:10])
     context = {
         # 'genre_list' : preference_list,
-        'movie_list' : movie_list
+        'movie_list' : movie_list,
+        'now' : now_list
     }
     return render(request, 'movies/index.html', context)
 
 def detail(request, movie_pk):
     movie = get_object_or_404(Movie, id=movie_pk)
     genre_list = []
-    now_list = getNow()
     movie_genre_list = eval(movie.genres)
     for genre in movie_genre_list:
         genre_item = Genre.objects.get(id=genre)
@@ -51,9 +51,9 @@ def detail(request, movie_pk):
     movie.genres = genre_list
     movie.credit = eval(movie.credit)
     context = {
-        'movie': movie,
-        'now' : now_list
+        'movie': movie,     
     }
+ 
     return render(request,'movies/detail.html', context)
     
 def getNow():
@@ -62,32 +62,38 @@ def getNow():
     movie_list = []
     api_key = '407e887e6e33a30edd477d217f18d883'
     url = f'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key={api_key}&targetDt={yesterday}&multiMovieYn=N&repNationCd=K'
+    a = requests.get(url).json()
     response = requests.get(url).json().get('boxOfficeResult').get('dailyBoxOfficeList')
+    api_key = '69855813cd52f7cdbc7e336c8afaac95'
     for movie in response:
         try:
             item = Movie.objects.get(title=movie.get('movieNm'))
             movie_list.append(item)
         except:
             movie_title = movie.get('movieNm')
-            find_url = f'https://api.themoviedb.org/3/search/movie?api_key={key}&language=ko-KR&query={movie_title}&page=1&include_adult=true'
-            response_2 = requests.get(find_url).json().get('result')[0]
-            movie_id = response_2.get('id')
-            detail_url = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={key}&language=ko-KR&append_to_response=videos%2Ccredits'
-            response_detail = requests.get('detail_url').json()
+            find_url = f'https://api.themoviedb.org/3/search/movie?api_key={api_key}&language=ko-KR&query={movie_title}&page=1&include_adult=true'
+            response_2 = requests.get(find_url).json().get('results')
+            if response_2:
+                movie_id = response_2[0].get('id')
+            else:
+                continue
+            detail_url = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=ko-KR&append_to_response=videos%2Ccredits'
+            response_detail = requests.get(detail_url).json()
             genre_list = []
             video_list = []
             for genre in response_detail.get('genres'):
                 genre_list.append(genre.get('id'))
-            if response_detail.get('videos').get('results'):
-                for movie in response_detail.get('videos').get('result'):
+            a = response_detail.get('videos').get('results')
+            if a:
+                for movie in a:
                     video_list.append(movie.get('key'))
             else:
-                detail_url2 = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={key}&language=en-US&append_to_response=videos%2Ccredits'
+                detail_url2 = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US&append_to_response=videos%2Ccredits'
                 response_detail_en = requests.get(detail_url2).json()
                 if response_detail_en.get('videos').get('result'):
                     for movie in response_detail_en.get('videos').get('result'):
                         video_list.append(movie.get('key'))
-            movie = Movie().objects.create(movieid=response_detail.get('id'),title=response_detail.get('title'), overview=response_detail.get('overview'), genres=genre_list, poster=response_detail.get('poster_path'), original_title=response_detail.get('original_title'), popularity= response_detail.get('popularity'), runtime= response_detail.get('runtime'), release_date=response_detail.get('release_date'), videos = video_list, credit = response_detail.get('credits').get('cast'))
+            movie = Movie.objects.create(movieid=response_detail.get('id'),title=response_detail.get('title'), overview=response_detail.get('overview'), genres=genre_list, poster=response_detail.get('poster_path'), original_title=response_detail.get('original_title'), popularity= response_detail.get('popularity'), runtime= response_detail.get('runtime'), release_date=response_detail.get('release_date'), videos = video_list, credit = response_detail.get('credits').get('cast'))
             movie_list.append(movie)
     
 
