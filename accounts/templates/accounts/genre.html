@@ -49,13 +49,10 @@
       let genreName = event.target.getAttribute('for')
       document.querySelector('.genre-bg').style.backgroundImage  = "url('/static/accounts/images/" + genreName + ".jpg')"
     })
-    // label.addEventListener('mouseout', function(event) {
-    //   document.querySelector('.genre-bg').style.backgroundImage  = "url('')"
-    // })
     label.addEventListener('click', function(event) {
       this.classList.toggle('select-label')
     })
-    label.addEventListener('click', function(event) {
+    label.addEventListener('click', function(event) {      
       var chkbox = document.getElementsByName("genre");
       var chkCnt = 1;
       for(var i = 0; i<chkbox.length; i++){
@@ -63,11 +60,13 @@
             chkCnt++;
           }
         }
-        console.log(chkCnt)
         if(chkCnt>3){
+          const genre = event.target.getAttribute('for')
+          const genreCheckbox = document.getElementById(genre).checked = 'false'
+          this.classList.remove('select-label')
           alert("장르는 3개까지 선택 가능합니다.");
-          this.checked = false;
-          return false;
+          
+          
         }
       })
   })

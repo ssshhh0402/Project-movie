@@ -32,6 +32,8 @@ label:hover {
 .select-label {
   opacity: 1 !important;
   color: yellow;
+  border-radius: 100%;
+  transition: all 0.5s;
 }
 header {
   height: 80px;
