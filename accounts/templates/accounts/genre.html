@@ -17,9 +17,9 @@
   <form action="{% url 'accounts:genre' %}" method="POST">
     {% csrf_token %}
     {% for genre in genres %}
-    <input type="checkbox" name="genre" value='{{genre.id}}' id="{{genre.name}}">
+      <input type="checkbox" name="genre" value='{{genre.id}}' id="{{genre.name}}">
     {% endfor %}
-    <button class="btn btn-dark genre-submit" type="submit">저장</button>
+    <button class="btn btn-success genre-submit " type="submit" >저장</button>
   </form>  
   <!-- 메인 div -->
   <header>
