@@ -6,7 +6,7 @@ body {
   background-color: #131313;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: all 0.5s;
+  /* transition: all 0.5s; */
 }
 
 .genre_box {
