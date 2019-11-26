@@ -22,19 +22,22 @@ def home(request):
 def index(request):
     User = get_user_model()
     user = get_object_or_404(User, username=request.user)
-    now_list = getNow()
-    movie_list = []
-    for idx in user.preference.all():   
-        genre_movie = {}
-        genre_movie['genre'] = Genre.objects.get(id=idx.id).name
-        movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
-        genre_movie['genre_movie_list'] = movie[:10]
-        movie_list.append(genre_movie)
-    context = {
-        'movie_list' : movie_list,
-        'now' : now_list
-    }
-    return render(request, 'movies/index.html', context)
+    if user.preference.all():
+        now_list = getNow()
+        movie_list = []
+        for idx in user.preference.all():   
+            genre_movie = {}
+            genre_movie['genre'] = Genre.objects.get(id=idx.id).name
+            movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
+            genre_movie['genre_movie_list'] = movie[:10]
+            movie_list.append(genre_movie)
+        context = {
+            'movie_list' : movie_list,
+            'now' : now_list
+        }
+        return render(request, 'movies/index.html', context)
+    else:
+        return redirect('accounts:genre')
 
 def detail(request, movie_pk):
     movie = get_object_or_404(Movie, movieid=movie_pk)
@@ -66,7 +69,6 @@ def getNow():
     a = requests.get(url).json()
     response = requests.get(url).json().get('boxOfficeResult').get('dailyBoxOfficeList')
     api_key = '69855813cd52f7cdbc7e336c8afaac95'
-    print(response)
     for movie in response:
         try:
             item = Movie.objects.get(title=movie.get('movieNm'))
@@ -101,22 +103,24 @@ def getNow():
 
 def get_re(a):
     api_key = '69855813cd52f7cdbc7e336c8afaac95'
-    url = 'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
-    response = requests.get(url).json().order_by('popularity')
+    url = f'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
+    response= requests.get(url).json().get('results')
     movie_list = []
     genre_list = []
     video_list = []
     recommendation_list = []
+    if not response:                                # 추천 영화 없으면
+        return recommendation_list
     for i in range(10):
         movie_list.append(response[i].get('id'))
-    
     for movie in movie_list:
         try:
             item = Movie.objects.get(movieid=movie)
             recommendation_list.append(item)
         except:
-            url = 'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}}95&language=ko-KR&append_to_response=videos%2Ccredits'
-            response = requests.get(url).json().get('result')
+            url = f'https://api.themoviedb.org/3/movie/{movie}?api_key={api_key}&language=ko-KR&append_to_response=videos%2Ccredits'
+            #response = requests.get(url).json().get('result')
+            response = requests.get(url).json()
             for genre in response.get('genres'):
                 genre_list.append(genre.get('id'))
             videos = response.get('videos').get('results')
@@ -130,6 +134,6 @@ def get_re(a):
                     for video in response_en:
                         video_list.append(video.get('key'))
             
-            movie_item = Movie.objects.create(movieid=movie, title=response.get('title'), overview=response.get('overview'), genres=genre_list, poster=response.get('poster_path'), original_titl=response.get('original_title'), popularity=response.get('popularity'), runtime=response.get('runtime'), release_date = response.get('release_date'),videos=video_list,credit=response.get('credits').get('cast'))
+            movie_item = Movie.objects.create(movieid=movie, title=response.get('title'), overview=response.get('overview'), genres=genre_list, poster=response.get('poster_path'), original_title=response.get('original_title'), popularity=response.get('popularity'), runtime=response.get('runtime'), release_date = response.get('release_date'),videos=video_list,credit=response.get('credits').get('cast'))
             recommendation_list.append(movie_item)
     return recommendation_list
