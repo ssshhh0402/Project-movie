@@ -53,8 +53,10 @@
       <div style="text-align: center;">
         <iframe width="1000" height="600" src="https://www.youtube.com/embed/{{movie.videos}}" frameborder="0" allowfullscreen></iframe>
       </div>    
-    </div> <hr>
+    </div> 
+    {% if re_movie %}
     <div class="mt-3">
+      <hr>
       <h1>추천영화</h1>
       <div class="row">
         {% for movie in re_movie %}
@@ -65,6 +67,7 @@
         {% endfor %}
       </div>
     </div>
+    {% endif %}
     <div class="mt-5">
       <hr>
       <h1>출연진</h1>
