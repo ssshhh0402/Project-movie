@@ -39,7 +39,10 @@ def genre(request):
     }
     if request.method == 'POST':
         user = request.user
-        
+        genres = request.POST.getlist('genre')
+        for pk in genres:
+            user.preference.add(pk)
+        return redirect('movies:index')
     else:
         return render(request, 'accounts/genre.html', context)
 

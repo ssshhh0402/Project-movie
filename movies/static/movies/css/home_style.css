@@ -27,22 +27,20 @@ div.sticky {
 }
 .form-bg-left {
   height: 100%;
-  background-color: black;
-  opacity: 0.7;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .form-bg-right {
   height: 100%;
   padding: 30px 70px;
-  background-color: black;
-  opacity: 0.7;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .home-bg-01 {
   height: 100%;
 }
 .signup-form {
-  opacity: 1;
+  opacity: 1 !important;
 }
 .login-form {
-  opacity: 1;
+  opacity: 1 !important;
   display: none;
 }

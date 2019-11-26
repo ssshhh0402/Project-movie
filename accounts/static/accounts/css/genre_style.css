@@ -11,9 +11,10 @@ body {
   /* border: solid .5px; */
   padding: 20px;
 }
-input[type="checkbox"] {
-   display: none;
-}
+
+/* input[type="checkbox"] {
+  display: none;
+}     */
 label {
   width: 150px;
   height: 150px;
