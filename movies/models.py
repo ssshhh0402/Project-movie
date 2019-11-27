@@ -40,3 +40,12 @@ class Actor(models.Model):
     name = models.CharField(max_length=30)
     gender = models.IntegerField()
     images = models.URLField()
+
+
+class MG(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    popularity = models.FloatField()
+class MK(models.Model):
+    movie = models.ForeignKey(Movie, on_delete = models.CASCADE)
+    genre = models.IntegerField()

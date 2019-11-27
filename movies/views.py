@@ -1,18 +1,15 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Movie, Genre, Comment
 from accounts.forms import CustomUserCreationForm
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
-from IPython import embed
-from .forms import CommentForm
-from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-from django.http import JsonResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse,JsonResponse
+from django.contrib.auth import get_user_model
+from .models import Movie, Genre
+from .forms import CommentForm
+from IPython import embed
+import datetime, requests, random
 
-import datetime
-import requests
-import random
+
 # Create your views here.
 
 def home(request):
