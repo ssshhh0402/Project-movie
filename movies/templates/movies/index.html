@@ -28,7 +28,7 @@
       background-position: center;
       background-size: cover; 
       width: 250px;
-      height: 450px;
+      height: 420px;
       background: #fff;
     }
     .swiper-slide .imgBx {
@@ -41,7 +41,7 @@
     }
     .swiper-slide .details {
       box-sizing: border-box;
-      padding:30px;
+      padding:20px;
     }
     .swiper-slide .details h3 {
       margin: 0;
@@ -49,6 +49,7 @@
       font-size: 20px;
       text-align: center;
       line-height: 20px;
+      color: black;
     }
     .swiper-slide .details h3 span {
       font-size: 16px;
@@ -60,7 +61,7 @@
   {% block body %}
   {% include '_navbar.html' %}
   <div class="swiper-container">
-    <h1>현재 상영작</h1>
+    <h1>추천 영화</h1>
     <div class="swiper-wrapper">
         {% for movie in now %}
       <div class="swiper-slide">

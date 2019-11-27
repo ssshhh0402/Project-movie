@@ -229,7 +229,7 @@ def recommendation_2(a):
     
     if not len(high_list):
         lists = Movie.objects.all().order_by('-score','-popularity')
-        return lists
+        return lists[:10]
     movie = random.choice(high_list)   
     key_list = []
     keywords = eval((Movie.objects.get(movieid=movie.movieid)).keywords)
