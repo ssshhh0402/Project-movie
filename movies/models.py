@@ -12,7 +12,7 @@ class Movie(models.Model):
     release_date = models.DateField()
     credit = models.TextField()
     genres = models.TextField()
-    poster = models.TextField()
+    poster = models.TextField()         # 이거 model 하나 새로 만들기
     videos = models.TextField()
     keywords = models.TextField()
     score = models.FloatField(default = 0)
@@ -40,13 +40,3 @@ class Actor(models.Model):
     name = models.CharField(max_length=30)
     gender = models.IntegerField()
     images = models.URLField()
-
-
-class MG(models.Model):
-    movieid = models.IntegerField()
-    genre = models.IntegerField()
-    popularity = models.FloatField()
-class MK(models.Model):
-    movieid = models.IntegerField()
-    keyword = models.IntegerField()
-    popularity = models.FloatField(null=True)
