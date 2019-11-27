@@ -43,9 +43,10 @@ class Actor(models.Model):
 
 
 class MG(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    movieid = models.IntegerField()
+    genre = models.IntegerField()
     popularity = models.FloatField()
 class MK(models.Model):
-    movie = models.ForeignKey(Movie, on_delete = models.CASCADE)
-    genre = models.IntegerField()
+    movieid = models.IntegerField()
+    keyword = models.IntegerField()
+    popularity = models.FloatField(null=True)
