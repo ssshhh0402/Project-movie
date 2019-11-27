@@ -34,12 +34,14 @@ def index(request):
             genre_movie = {}
             genre_movie['genre'] = Genre.objects.get(id=idx.id).name
             movie = Movie.objects.filter(genres__contains= idx.id).order_by('-popularity')
+            embed()
             genre_movie['genre_movie_list'] = movie[:10]
             movie_list.append(genre_movie)
         context = {
             'movie_list' : movie_list,
             'now' : now_list
         }
+
         return render(request, 'movies/index.html', context)
     else:
         return redirect('accounts:genre')
@@ -66,7 +68,6 @@ def detail(request, movie_pk):
         'comments' : comments,
         'comment_form' : comment_form
     }
-    
     return render(request,'movies/detail.html', context)
     
 def getNow():
