@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Movie, Genre
+from .models import Movie, Genre, Comment
 from accounts.forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm

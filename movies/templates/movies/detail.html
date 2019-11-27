@@ -126,7 +126,10 @@
     <p>
       <span>{{comment.user}} | {{comment.score}}점 |</span> {{comment.content}}
       {% if user == comment.user %}
-      <button>X</button>
+      <form action="{% url 'movies:c_delete' comment.movie.movieid comment.pk %}" method="POST" class="d-inline ">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-dark">평점삭제</button>
+      </form>
       {% endif %}
     </p>
     {% endfor %}
