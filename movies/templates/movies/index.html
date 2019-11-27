@@ -68,7 +68,7 @@
           <a href="{% url 'movies:detail' movie.movieid %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
         </div>
         <div class="details">
-          <h3>{{movie.title}}<br> <span>어쩌구</span></h3>
+          <h3>{{movie.title}}<br> <span></span></h3>
         </div>
       </div>
       {% endfor %}
@@ -85,7 +85,7 @@
           <a href="{% url 'movies:detail' movie.movieid %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
         </div>
         <div class="details">
-          <h3>{{movie.title}}<br> <span>{{movie.genre}}</span></h3>
+          <h3>{{movie.title}}<br> <span></span></h3>
         </div>
       </div>
       {% endfor %}
