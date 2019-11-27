@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import get_user_model
-from .models import Movie, Genre
+from .models import Movie, Genre, Comment
 from .forms import CommentForm
 from IPython import embed
 import datetime, requests, random

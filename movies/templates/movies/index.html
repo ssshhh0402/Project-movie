@@ -59,7 +59,7 @@
 
   {% block body %}
   {% include '_navbar.html' %}
-  <!-- <div class="swiper-container">
+  <div class="swiper-container">
     <h1>현재 상영작</h1>
     <div class="swiper-wrapper">
         {% for movie in now %}
@@ -74,7 +74,7 @@
       {% endfor %}
     </div>
     <div class="swiper-pagination"></div>
-  </div> -->
+  </div>
   {% for list in movie_list %}
   <div class="swiper-container">
     <h1>{{list.genre}} 기반 추천영화</h1>
