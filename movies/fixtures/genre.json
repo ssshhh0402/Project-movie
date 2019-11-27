@@ -124,12 +124,5 @@
         "fields": {
             "name": "전쟁"
         }
-    },
-    {
-        "pk": 10770,
-        "model": "movies.Genre",
-        "fields": {
-            "name": "TV 영화"
-        }
     }
 ]
