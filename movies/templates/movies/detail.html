@@ -45,10 +45,10 @@
           <p>인기도: {{movie.popularity}}</p>
           <p>상영시간: {{movie.runtime}}분</p>
           <p>개봉일: {{movie.release_date}}</p>
-          {% if user in movie.like_users %}
-          <button type="button" class="btn btn-success">좋아요 취소</button>
+          {% if user in movie.like_users.all %}
+          <a href={% url 'movies:like' movie.pk %}><button type="button" class="btn btn-success">좋아요 취소</button></a>
           {% else %}
-          <button type="button" class="btn btn-secondary">좋아요</button>
+          <a href={% url 'movies:like' movie.pk %}><button type="button" class="btn btn-secondary">좋아요</button></a>
           {% endif %}
       </div>
     </div> 

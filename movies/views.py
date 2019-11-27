@@ -64,7 +64,7 @@ def detail(request, movie_pk):
         'comments' : comments,
         'comment_form' : comment_form
     }
- 
+    print(movie.like_users)
     return render(request,'movies/detail.html', context)
     
 def getNow():
