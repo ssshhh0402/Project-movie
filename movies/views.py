@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 import datetime
 import requests
+import random
 # Create your views here.
 
 def home(request):
@@ -64,7 +65,7 @@ def detail(request, movie_pk):
         'comments' : comments,
         'comment_form' : comment_form
     }
-    print(movie.like_users)
+    
     return render(request,'movies/detail.html', context)
     
 def getNow():
@@ -113,7 +114,6 @@ def get_re(a):
     url = f'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
     response= requests.get(url).json().get('results')
     movie_list = []
-    
     recommendation_list = []
     if not response:                                # 추천 영화 없으면
         return recommendation_list
@@ -147,7 +147,7 @@ def get_re(a):
 
 ########################################댓글#########################
 @require_POST
-def comment_create(request, movie_pk):
+def comment_create(request, movie_pk):                          # 여기다가 평점도 저장해야 할듯
     if request.user.is_authenticated:
         movie = get_object_or_404(Movie, movieid=movie_pk)
         comment_form = CommentForm(request.POST)
@@ -156,7 +156,9 @@ def comment_create(request, movie_pk):
             comment.movie = movie
             comment.user = request.user
             comment.save()
-            embed()
+            num = len(movie.comment_set.all())
+            movie.score = ((movie.score *(num - 1)) + comment.score) / num
+            movie.save()
             return redirect('movies:detail', movie_pk)
         # 타당하지 않을 경우 Alert 창 띄우면 될것같은데...
     else:
@@ -182,3 +184,24 @@ def like(request, movie_pk):
         return redirect('accounts:login')
 ###########################################################################
 
+def recommendation_2(request):
+    comments = get_object_or_404(Comment, user=request.user.id)
+    high_list = []
+    highest_val = -0xffffff
+    for comment in comments:
+        if comment.score > highest_val:
+            high_list.clear()
+            high_list.append(comment.movie)
+            highest_val = comment.score
+        elif comment.score == highest_val:
+            high_list.append(comment.movie)
+    movie = random.choice(high_list)   
+    keywords = Movie.objects.get(movieid=movie).get('keywords')
+    recommendation_list = Movie.objects.get(keyword__in=keywords).order_by('-score', '-popularity')
+    if not recommendation_list:
+        return []
+    else:
+        if len(recommendation_list) > 10:
+            return recommendation_list[:10]
+        else:
+            return recommendation_list
