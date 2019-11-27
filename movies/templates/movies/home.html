@@ -6,19 +6,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'movies/css/home_style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Serif+KR|Sunflower:300&display=swap" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="{% static 'movies/css/home_style.css' %}"> -->
   <title>Document</title>
+  <style>
+    * {
+      font-family: 'Sunflower', sans-serif;
+    }     
+    body {
+      height: 100vh;
+    }
+    .home-bg-01 {
+      height: 100%;
+    }
+    .div01 {
+      height: 100%;
+      width: 100%;
+      color: white;
+      padding: 100px 200px;
+      background-image: url('/static/movies/images/harry_potter.png');
+      background-attachment: fixed;                                                                                                                                                                   
+      background-position-y: -150px;
+    }
+    div.sticky {
+      position: sticky;
+      top: 0;
+      height: 50px;
+      background-color: black;
+      color: white;
+      font-size: 15px;
+      line-height: 50px;
+    }
+    .form-bg-left {
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .form-bg-right {
+      height: 100%;
+      padding: 30px 70px;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    .signup-form {
+      opacity: 1 !important;
+    }
+    .login-form {
+      opacity: 1 !important;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="index div01">
+  <div class="div01">
     <div class="home-bg-01 row">
-      <div class="col-7 form-bg-left">
+      <div class="col-7 form-bg-left text-center">
+        <h1>뭔가를 넣어어 이쁘게 꾸미고 싶지만</h1>
+        <h2>미적감각이 떨어져서 아무것도 생각이 나지않는다고 합니다.</h2>
       </div>
       <div class="col-1"></div>
       <div class="col-4 form-bg-right">
         <div class="signup-form">
           <h2>회원가입</h2>
-          <p>어쩌구 저쩌구 회원가입하면 좋은점이 많답니다.</p>
           <!-- 다음에 다시 와서 form 바꾸자 -->
           <form action="{% url 'accounts:signup' %}" method="POST">
             {% csrf_token %}
@@ -46,14 +93,16 @@
               <label for="password2">비밀번호 확인</label>
               <input type="password" class="form-control" id="password2" placeholder="비밀번호확인" name="password2">
             </div>
-            <input type="submit" class="btn btn-dark" value="회원가입">
+            <div class="text-right">
+            <input type="submit" class="btn btn-info" value="회원가입">
+            <br><br>
+            <p class="">이미 회원이시라면 <span id="login-change" class="text-warning">로그인</span></p>
+            </div>
           </form>
-          <p>또는 <span id="login-change">로그인</span> </p>  
         </div>
 
         <div class="login-form">
           <h2>로그인</h2>
-          <p>이미 회원이면 로그인하고 영화나 보시죠.</p>
           <form action="{% url 'accounts:login' %}" method="POST">
             {% csrf_token %}
             <div class="form-group">
@@ -64,18 +113,20 @@
               <label for="password">비밀번호</label>
               <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password">
             </div>
-            <input type="submit" class="btn btn-dark" value="로그인">
-            <p>회원이 아니라면 <span id="signup-change">회원가입</span></p>
+            <div class="text-right">
+              <input type="submit" class="btn btn-info" value="로그인">
+              <br><br>
+              <p class="">아직 회원이 아니라면 <span id="signup-change" class="text-warning">회원가입</span></p>            
           </form>
         </div>
 
       </div>
     </div>
   </div>
-  <div class="sticky">
+  <!-- <div class="sticky">
     <p>이 곳은 sticky bar, 스크롤을 올리면 nav-bar가 되지요</p>
-  </div>
-  <div class="index div03">
+  </div> -->
+  <!-- <div class="index div03">
     <div class="div03_item01">
       <p>영화 볼래?</p>
     </div>
@@ -87,7 +138,7 @@
     </div>
   </div>
   <div class="index div03">4</div>
-  <div class="index div03">5</div>
+  <div class="index div03">5</div> -->
 
   <script>
     const login = document.querySelector('#login-change')

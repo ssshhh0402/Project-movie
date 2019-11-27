@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <style>
     body {
-      background: #131313;
+      background: #232323;
       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
       font-size: 14px;
       color:#000;
@@ -63,7 +63,7 @@
     <h1>현재 상영작</h1>
     <div class="swiper-wrapper">
         {% for movie in now %}
-      <div class="swiper-slide" >
+      <div class="swiper-slide">
         <div class="imgBx">
           <a href="{% url 'movies:detail' movie.movieid %}"><img src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
         </div>
