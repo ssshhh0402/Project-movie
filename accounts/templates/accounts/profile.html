@@ -2,11 +2,16 @@
 
 {% block css %}
   <style>
+    * {
+      color: white;
+    }
     body {
       background: #131313;    
     }
-    * {
+    hr {
       color: white;
+      border-color: white;
+      background-color: white;
     }
   </style>
 {% endblock %}
@@ -17,21 +22,29 @@
 
 {% block body %}
   {% include '_navbar.html' %}
-  <div class="container">
-    <h1>이곳은 프로필 페이지랍니다</h1>
-    <p>{{user.username}}</p>
-
+  <div class="container mt-5">
+    <h1>{{user.username}} 프로필</h1><hr>
     <h2>좋아요한 영화</h2>
-    {% for movie in user.like_movies.all %}
-      <p>{{movie.title}}</p>
-    {% endfor %}
+    <div class="row">
+      {% for movie in user.like_movies.all %}
+      <div class="col-3">
+        <a href="{% url 'movies:detail' movie.movieid %}"><img width="100%" src="https://image.tmdb.org/t/p/w500{{movie.poster}}"></a>
+        <p>{{movie.title}}</p>
+      </div>
+      {% endfor %}
+    </div>
 
+    <h2>평점 관리</h2>
     {% for comment in user.comment_set.all %}
-      <p>{{comment.movie.title}}</p>
-      <p>{{comment.score}} | <span>{{comment.content}}</span></p>
-      
+      <span>{{comment.movie.title}} 평점</span>
+      <span>{{comment.score}} | <span>{{comment.content}}</span></span>
+      <form action="{% url 'movies:c_delete' comment.movie.movieid comment.pk %}" method="POST" class="d-inline ">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-dark">평점삭제</button>
+      </form> <hr> 
     {% endfor %}
   </div>
+  {% include '_footer.html' %}
 {% endblock %}
 
 {% block script %}

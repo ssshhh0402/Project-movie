@@ -194,7 +194,7 @@ def comment_create(request, movie_pk):                          # 여기다가 �
 def comment_delete(request, movie_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment.delete()
-    return redirect('movies:detail', movie_pk)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 ########################################좋아요############################
 
 def like(request, movie_pk):

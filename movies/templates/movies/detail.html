@@ -123,15 +123,18 @@
     </div>
     {% endif %}
     {% for comment in comments %}
-    <p>
-      <span>{{comment.user}} | {{comment.score}}점 |</span> {{comment.content}}
+      <span>{{comment.user}} | {{comment.score}}점 | {{comment.content}} </span>
       {% if user == comment.user %}
-      <button>X</button>
+      <form action="{% url 'movies:c_delete' comment.movie.movieid comment.pk %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-dark d-inline">평점삭제</button>
+      </form>
+      <hr>
       {% endif %}
-    </p>
     {% endfor %}
     </div>
   </div>
+  {% include '_footer.html' %}
   {% endblock %}
 
   {% block script %}  
