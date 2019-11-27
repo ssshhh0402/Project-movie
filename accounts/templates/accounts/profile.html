@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block css %}
+  <style>
+    body {
+      background: #131313;    
+    }
+    * {
+      color: white;
+    }
+  </style>
+{% endblock %}
+{% block title %}
+  <title>프로필</title>
+{% endblock %}
+
+
+{% block body %}
+  {% include '_navbar.html' %}
+  <div class="container">
+    <h1>이곳은 프로필 페이지랍니다</h1>
+    <p>{{user.username}}</p>
+
+    <h2>좋아요한 영화</h2>
+    {% for movie in user.like_movies.all %}
+      <p>{{movie.title}}</p>
+    {% endfor %}
+
+    {% for comment in user.comment_set.all %}
+      <p>{{comment.movie.title}}</p>
+      <p>{{comment.score}} | <span>{{comment.content}}</span></p>
+      
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

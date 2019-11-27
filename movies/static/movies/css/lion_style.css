@@ -1,7 +1,7 @@
 body {
-  /* background: #3d516b; */
+  background: #3d516b;
 }
-/* 
+
 form {
     width: 320px;
     padding: 60px 25px 80px;
@@ -9,7 +9,7 @@ form {
 
     display: flex;
     flex-direction: column;
-} */
+}
 
 svg {
     width: 70%;
@@ -20,14 +20,14 @@ svg {
     transform-style: preserve-3d;
 }
 
-/* input {
+input {
     font-size: 16px;
     border: 0;
     border-radius: 5px;
     outline: 0;
     padding: 10px 15px;
     margin-top: 15px;
-} */
+}
 
 @keyframes lookaway-up {
     from {

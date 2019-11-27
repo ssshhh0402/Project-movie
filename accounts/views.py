@@ -58,16 +58,16 @@ def profile(request):                    # request.user의 정보 받아오기
     }
     return render(request, 'accounts/profile.html', context)
         
-def update(request):                       # POST 면 변경 후 바뀐 프로필 보여주기
-                                                    # GET이면 유저 정보 변경 Form 보여주기
-    if request.method == 'POST':                   
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('accounts:profile')
-    else:
-        form = CustomUserChangeForm(instance=request.user)
-    context = {
-        'form' : form
-    }
-    return render(request, 'accounts/form.html', context)
+# def update(request):                       # POST 면 변경 후 바뀐 프로필 보여주기
+#                                                     # GET이면 유저 정보 변경 Form 보여주기
+#     if request.method == 'POST':                   
+#         form = CustomUserChangeForm(request.POST, instance=request.user)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('accounts:profile')
+#     else:
+#         form = CustomUserChangeForm(instance=request.user)
+#     context = {
+#         'form' : form
+#     }
+#     return render(request, 'accounts/form.html', context)
