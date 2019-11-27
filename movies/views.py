@@ -241,5 +241,5 @@ def recommendation_2(a):
     else:
         return recommendation_list[:10]
 
-    def about(request):
+def about(request):
     return render(request, 'movies/about.html')
