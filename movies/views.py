@@ -226,6 +226,9 @@ def recommendation_2(a):
             highest_val = comment.score
         elif comment.score == highest_val:
             high_list.append(comment.movie)
+    
+    if not len(high_list):
+        return []
     movie = random.choice(high_list)   
     key_list = []
     keywords = eval((Movie.objects.get(movieid=movie.movieid)).keywords)
