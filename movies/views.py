@@ -113,14 +113,15 @@ def get_re(a):
     url = f'https://api.themoviedb.org/3/movie/{a}/recommendations?api_key={api_key}&language=ko-KR&page=1'
     response= requests.get(url).json().get('results')
     movie_list = []
-    genre_list = []
-    video_list = []
+    
     recommendation_list = []
     if not response:                                # 추천 영화 없으면
         return recommendation_list
     for i in range(10):
         movie_list.append(response[i].get('id'))
     for movie in movie_list:
+        genre_list = []
+        video_list = []
         try:
             item = Movie.objects.get(movieid=movie)
             recommendation_list.append(item)
