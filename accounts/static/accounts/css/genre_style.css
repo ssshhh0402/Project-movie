@@ -9,14 +9,14 @@
   background-repeat: no-repeat;
   transition: all 0.5s;
 } */
-.genre_box {
+/* .genre_box {
   height: 200px;
   padding: 20px;
-}
+} */
 /* input[type="checkbox"] {
   display: none;
 }     */
-label {
+/* label {
   width: 150px;
   height: 150px;
   line-height: 150px;
@@ -47,4 +47,4 @@ footer {
   position: absolute;
   top: 20px;
   right: 20px;
-}
+} */

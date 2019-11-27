@@ -7,19 +7,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'accounts/css/genre_style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR|Noto+Serif+KR|Sunflower:300&display=swap" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="{% static 'accounts/css/genre_style.css' %}"> -->
   <title>Genre</title>
   <style>
+    * {
+      font-family: 'Sunflower', sans-serif;
+    }
     body {
       height: 100vh;
       background-color: black;
     }
     .genre-bg {
-      height: 90%;
+      height: 86%;
       background-color: #131313;
       background-size: cover;
       background-repeat: no-repeat;
+    }
+    .genre_box {
+      height: 200px;
+      padding: 20px;
+    }
+    input[type="checkbox"] {
+      display: none;
+    } 
+    label {
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      font-size: 1.5rem;
+      background-color: black;
+      opacity: .6;
+      text-align: center;
+      color: white
+    }
+    label:hover {
+      opacity: .8;
+    }
+    .select-label {
+      opacity: 1 !important;
+      color: yellow;
+      border-radius: 100%;
       transition: all 0.5s;
+    }
+    header {
+      height: 7%;
+      background-color: black;
+    }
+    footer {
+      height: 7%;
+      background-color: black;
+    }
+    .genre-p {
+      display:inline;
+      position: absolute;
+      top: 15px;
+      right: 40px;      
+      color: white;
+      font-size: 20px;
+    }
+    .genre-submit {
+      display: none;
+      position: absolute;
+      top: 15px;
+      right: 40px;
     }
   </style>
 </head>
@@ -30,7 +81,10 @@
     {% for genre in genres %}
       <input type="checkbox" name="genre" value='{{genre.id}}' id="{{genre.name}}">
     {% endfor %}
-    <button class="btn btn-success genre-submit " type="submit" >저장</button>
+    <div>
+      <p class="genre-p"> 좋아하는 장르 세가지를 선택하세요 </p>
+      <button class="btn btn-success genre-submit " type="submit">저장</button>
+    </div>
   </form>  
   <!-- 메인 div -->
   <header>
@@ -59,22 +113,35 @@
     })
     label.addEventListener('click', function(event) {
       this.classList.toggle('select-label')
-    })
-    label.addEventListener('click', function(event) {
-      var chkbox = document.getElementsByName("genre");
-      var chkCnt = 1;
-      for(var i = 0; i<chkbox.length; i++){
-        if(chkbox[i].checked){
+      })
+  })
+  const chkbox = document.getElementsByName("genre")
+  chkbox.forEach(select => {
+    select.addEventListener('change', function(event) {
+      const genreSubmit = document.querySelector('.genre-submit')
+      const genreP = document.querySelector('.genre-p')
+      let chkCnt = 0;
+      for(let i = 0; i<chkbox.length; i++)  {
+        if(chkbox[i].checked) {
             chkCnt++;
           }
         }
+        console.log(chkCnt)
         if(chkCnt>3){
-          const genre = event.target.getAttribute('for')
-          const genreCheckbox = document.getElementById(genre).checked = 'false'
-          this.classList.remove('select-label')
-          alert("장르는 3개까지 선택 가능합니다.");
+          const genre = event.target.getAttribute('id')
+          element = document.querySelector(`label[for=${genre}]`);
+          select.checked = false
+          element.classList.remove('select-label')
+          alert("장르는 3개까지 선택 가능합니다.")
         }
-      })
+        if(chkCnt === 3) {
+          genreSubmit.style.display = "inline"
+          genreP.style.display = "none"
+        } else {
+          genreSubmit.style.display = "none"
+          genreP.style.display = "inline"
+        }        
+    })
   })
 
   </script>
