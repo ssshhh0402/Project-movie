@@ -173,3 +173,5 @@ def like(request, movie_pk):
         return redirect('movies:detail', movie_pk)
     else:
         return redirect('accounts:login')
+###########################################################################
+
