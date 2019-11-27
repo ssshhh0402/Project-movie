@@ -90,7 +90,7 @@
           {% if item.profile_path %}
           <img  width="100%" src="https://image.tmdb.org/t/p/w200{{item.profile_path}}">
           {% else %}
-          <span>[사진없음]</span>
+          <img  width="100%" src="{% static 'movies/images/unknown.jpg' %}">
           {% endif%}
           <p>{{item.name}}</p>
         </div>
