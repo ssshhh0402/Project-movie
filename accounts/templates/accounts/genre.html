@@ -3,6 +3,7 @@
   {% block title%}
   <title>장르선택</title>
   {% endblock %}
+  {% block css %}
   <style>
     * {
       font-family: 'Sunflower', sans-serif;
@@ -20,6 +21,7 @@
     .genre_box {
       height: 200px;
       padding: 20px;
+      transition: all 1s;
     }
     input[type="checkbox"] {
       display: none;
@@ -32,16 +34,16 @@
       background-color: black;
       opacity: .6;
       text-align: center;
-      color: white
+      color: white;
+      transition: all 0.6s;
     }
     label:hover {
       opacity: .8;
     }
     .select-label {
       opacity: 1 !important;
-      color: yellow;
+      color: #ffc107;
       border-radius: 100%;
-      transition: all 0.5s;
     }
     header {
       height: 7%;
@@ -57,8 +59,15 @@
       top: 15px;
       right: 40px;      
       color: white;
-      font-size: 20px;
+      font-size: 23px;
+      font-weight: bold;
+      animation: change-color 2s infinite;
+      animation-direction: alternate;
     }
+    @keyframes change-color {
+      0%   {color:  #fff; }
+      100% {color:  #cf5763; }
+    }    
     .genre-submit {
       display: none;
       position: absolute;
@@ -66,9 +75,9 @@
       right: 40px;
     }
   </style>
-</head>
-<body>
-  <!-- display:none 시킬 form들-->
+  {% endblock %}
+
+  {% block body %}
   <form action="{% url 'accounts:genre' %}" method="POST">
     {% csrf_token %}
     {% for genre in genres %}
@@ -79,13 +88,15 @@
       <button class="btn btn-success genre-submit " type="submit">저장</button>
     </div>
   </form>  
-  <!-- 메인 div -->
+
   <header>
+    <!-- 이 부분 배포시 삭제 -->
     {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}" style="color:white" >{{ user.username }}</a>
     {% endif %}
+    <!-- 배포시 삭제 -->
   </header>
-  <div class="genre-bg">
+  <div class="genre-bg d-flex align-items-center">
     <div class="container">
       <div class="row">
         {% for genre in genres %}
@@ -98,6 +109,8 @@
   </div>
   <footer>
   </footer>
+  {% endblock %}
+  {% block script %}
   <script>
   document.querySelectorAll('label').forEach(label => {
     label.addEventListener('mouseover', function(event) {
@@ -138,4 +151,4 @@
   })
 
   </script>
-{%endblock%}
+{% endblock %}
