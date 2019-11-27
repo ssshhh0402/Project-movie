@@ -7,6 +7,7 @@ from IPython import embed
 from .forms import CommentForm
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 import datetime
 import requests
 # Create your views here.
@@ -173,12 +174,15 @@ def comment_delete(request, movie_pk, comment_pk):
 def like(request, movie_pk):
     if request.user.is_authenticated:
         movie = get_object_or_404(Movie, movieid=movie_pk)
+        is_liked = True
         if request.user in movie.like_users.all():
             movie.like_users.remove(request.user)
+            is_liked = False
         else:
             movie.like_users.add(request.user)
-        return redirect('movies:detail', movie_pk)
+            is_liked = True
+        return JsonResponse({'is_liked':is_liked})
     else:
-        return redirect('accounts:login')
+        return redirect('/')
 ###########################################################################
 
