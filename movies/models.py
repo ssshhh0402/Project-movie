@@ -14,6 +14,8 @@ class Movie(models.Model):
     genres = models.TextField()
     poster = models.TextField()
     videos = models.TextField()
+    keywords = models.TextField()
+    score = models.FloatField(default = 0)
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='like_movies',
