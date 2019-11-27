@@ -156,11 +156,18 @@ def comment_create(request, movie_pk):
             comment.movie = movie
             comment.user = request.user
             comment.save()
+            embed()
             return redirect('movies:detail', movie_pk)
         # 타당하지 않을 경우 Alert 창 띄우면 될것같은데...
     else:
         return HttpResponse('Unauthorized', status=401)
 
+
+@require_POST   
+def comment_delete(request, movie_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    comment.delete()
+    return redirect('movies:detail', movie_pk)
 ########################################좋아요############################
 
 def like(request, movie_pk):
