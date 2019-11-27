@@ -1,13 +1,14 @@
-body {
-  /* background-color: black; */
-}
-.genre-bg {
-  /* background-color: black; */
+/* body {
+  height: 100vh;
+  background-color: black;
+} */
+/* .genre-bg {
+  height: 90%;
   background-color: #131313;
   background-size: cover;
   background-repeat: no-repeat;
-  /* transition: all 0.5s; */
-}
+  transition: all 0.5s;
+} */
 .genre_box {
   height: 200px;
   padding: 20px;
