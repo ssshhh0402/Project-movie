@@ -22,10 +22,8 @@
 
 {% block body %}
   {% include '_navbar.html' %}
-  <div class="container">
-    <h1>이곳은 프로필 페이지랍니다</h1>
-    <p>{{user.username}}</p>
-
+  <div class="container mt-5">
+    <h1>{{user.username}} 프로필</h1><hr>
     <h2>좋아요한 영화</h2>
     <div class="row">
       {% for movie in user.like_movies.all %}
@@ -46,6 +44,7 @@
       </form> <hr> 
     {% endfor %}
   </div>
+  {% include '_footer.html' %}
 {% endblock %}
 
 {% block script %}
