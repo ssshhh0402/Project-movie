@@ -203,13 +203,10 @@ def recommendation_2(request):
             highest_val = comment.score
         elif comment.score == highest_val:
             high_list.append(comment.movie)
-<<<<<<< HEAD
-=======
     
     if not len(high_list):
         lists = (Movie.objects.all().order_by('-score','-popularity'))[:10]
         return lists
->>>>>>> e1c8a7ddf3ccd9cc56f6e84c21db4228e0baec0e
     movie = random.choice(high_list)   
     keywords = Movie.objects.get(movieid=movie).get('keywords')
     recommendation_list = Movie.objects.filter(keyword__in=keywords).order_by('-score', '-popularity')
