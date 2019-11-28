@@ -58,12 +58,11 @@ def detail(request, movie_pk):
     movie.credit = eval(movie.credit)
     re_movie = get_re(movie_pk)
     comments = movie.comment_set.all()
-    comment_form = CommentForm()
+
     context = {
         'movie': movie,
         're_movie' : re_movie,
         'comments' : comments,
-        'comment_form' : comment_form
     }
     
     return render(request,'movies/detail.html', context)
@@ -117,8 +116,17 @@ def get_re(a):
     recommendation_list = []
     if not response:                                # 추천 영화 없으면
         return recommendation_list
-    for i in range(10):
+    # if len(response) >= 10:
+    #     for i in range(10):
+    #         embed()
+    #         movie_list.append(response[i].get('id'))
+    # else:
+    #     for i in range(len(response)):
+    #         movie_list.append(response[i].get('id'))
+    response = response[:10]
+    for i in range(len(response)):
         movie_list.append(response[i].get('id'))
+        
     for movie in movie_list:
         genre_list = []
         video_list = []
@@ -195,6 +203,13 @@ def recommendation_2(request):
             highest_val = comment.score
         elif comment.score == highest_val:
             high_list.append(comment.movie)
+<<<<<<< HEAD
+=======
+    
+    if not len(high_list):
+        lists = (Movie.objects.all().order_by('-score','-popularity'))[:10]
+        return lists
+>>>>>>> e1c8a7ddf3ccd9cc56f6e84c21db4228e0baec0e
     movie = random.choice(high_list)   
     keywords = Movie.objects.get(movieid=movie).get('keywords')
     recommendation_list = Movie.objects.filter(keyword__in=keywords).order_by('-score', '-popularity')

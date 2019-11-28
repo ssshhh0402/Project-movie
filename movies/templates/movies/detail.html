@@ -92,7 +92,7 @@
           <img  width="100%" src="https://image.tmdb.org/t/p/w200{{item.profile_path}}">
           {% else %}
           <img  width="100%" src="{% static 'movies/images/unknown.jpg' %}">
-          {% endif%}
+          {% endif %}
           <p>{{item.name}}</p>
         </div>
       {% endfor %}
@@ -101,7 +101,7 @@
     <div class="mt-3">
     <hr>
     <h1>평점</h1>
-      {% if 'true'%}
+      {% if user not in movie.comment_set.all %}
     <div>
       <form action="{% url 'movies:c_comment' movie.pk %}" method="POST">
         {% csrf_token%}
